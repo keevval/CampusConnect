@@ -30,7 +30,10 @@ export default function EventCard({ event, onRSVP, onInspect }: EventCardProps) 
   const percentFilled = Math.min(100, Math.round((event.registeredCount / event.capacity) * 100));
 
   return (
-    <div className="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-purple-500/10 flex flex-col justify-between group">
+    <div
+      onClick={onInspect}
+      className="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-purple-500/10 flex flex-col justify-between group cursor-pointer"
+    >
       <div>
         {/* Banner Header */}
         <div className="h-44 relative overflow-hidden bg-slate-950">
@@ -64,10 +67,7 @@ export default function EventCard({ event, onRSVP, onInspect }: EventCardProps) 
 
         {/* Card Body */}
         <div className="p-5">
-          <h3
-            onClick={onInspect}
-            className="text-lg font-bold text-slate-100 hover:text-purple-300 cursor-pointer transition line-clamp-2 mb-2"
-          >
+          <h3 className="text-lg font-bold text-slate-100 hover:text-purple-300 transition line-clamp-2 mb-2">
             {event.title}
           </h3>
 
@@ -108,7 +108,10 @@ export default function EventCard({ event, onRSVP, onInspect }: EventCardProps) 
         </div>
 
         <button
-          onClick={onRSVP}
+          onClick={(clickEvent) => {
+            clickEvent.stopPropagation();
+            onRSVP();
+          }}
           className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-md ${
             event.isRSVPed
               ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
@@ -122,3 +125,4 @@ export default function EventCard({ event, onRSVP, onInspect }: EventCardProps) 
     </div>
   );
 }
+
