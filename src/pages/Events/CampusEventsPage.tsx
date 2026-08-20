@@ -86,6 +86,12 @@ export default function CampusEventsPage() {
   const [selectedEventModal, setSelectedEventModal] = useState<CampusEvent | null>(null);
 
   const categories = ['All', 'Hackathon', 'Symposium', 'Workshop', 'Cultural', 'Sports'];
+  const hasActiveFilters = searchQuery.trim() !== '' || selectedCategory !== 'All';
+
+  const clearFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('All');
+  };
 
   const toggleRSVP = (eventId: string) => {
     setEvents(prev =>
@@ -192,6 +198,15 @@ export default function CampusEventsPage() {
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-900/90 border border-slate-800 rounded-xl text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-purple-500 transition"
               />
             </div>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="text-xs font-medium text-slate-300 hover:text-white whitespace-nowrap"
+              >
+                Clear Filters
+              </button>
+            )}
           </div>
         </div>
 
@@ -317,3 +332,4 @@ export default function CampusEventsPage() {
     </div>
   );
 }
+
